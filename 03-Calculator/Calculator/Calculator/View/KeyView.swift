@@ -13,6 +13,7 @@ struct KeyView: View {
     @State var runningNumber = 0
     @State var currentOperation: Operation = .none
     @State private var changeColor = false
+    @State var changeNumber = true
     
     let buttons : [[Keys]] = [
         [.clear, .negative, .percent, .divide],
@@ -80,22 +81,27 @@ struct KeyView: View {
             if button == .add{
                 self.currentOperation = .add
                 self.runningNumber = Int(self.value) ?? 0
+                self.changeNumber = true
             }
             else if button == .substract{
                 self.currentOperation = .substract
                 self.runningNumber = Int(self.value) ?? 0
+                self.changeNumber = true
             }
             else if button == .multiply{
                 self.currentOperation = .multiply
                 self.runningNumber = Int(self.value) ?? 0
+                self.changeNumber = true
             }
             else if button == .divide{
                 self.currentOperation = .divide
                 self.runningNumber = Int(self.value) ?? 0
+                self.changeNumber = true
             }
             else if button == .equal{
                 let runningVakue = self.runningNumber
                 let currentValue = Int(self.value) ?? 0
+                self.changeNumber = true
                 
                 switch self.currentOperation{
                 case .add: self.value = "\(runningVakue + currentValue)"
@@ -114,11 +120,13 @@ struct KeyView: View {
             break
         default:
             let number = button.rawValue
-            if self.value == "0" {
+ 
+            if changeNumber {
                 value = number
+                changeNumber = false
             }
             else{
-                self.value = "\(self.value)\(number)"
+                value = "\(self.value)\(number)"
             }
         }
     }
