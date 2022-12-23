@@ -116,6 +116,7 @@ struct KeyView: View {
             }
         case .clear:
             self.value = "0"
+            changeNumber = true
         case .decimal, .negative, .percent:
             break
         default:
